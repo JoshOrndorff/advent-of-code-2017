@@ -6,12 +6,8 @@ document.addEventListener("DOMContentLoaded", function(event){
   document.getElementById("button1").addEventListener("click", solvePart1)
   document.getElementById("button2").addEventListener("click", solvePart2)
 
-  // Global common problem parameters
-
-
   // Global my problem parameters
   var particles
-
 
   /**
    * Solves the first part of the problem and displays answer in the DOM
@@ -37,12 +33,38 @@ document.addEventListener("DOMContentLoaded", function(event){
    * Solves the second part of the problem and displays answer in the DOM
    */
   function solvePart2(){
-    // Parse  input into BOTH array AND set of particle objects
+    // Parse  input into an array of particle objects
     particles = parseInput()
-    pSet = new Set()
+
+    // Loop over and over until all collisions have been resolved
+    // Rather than figuring out how to formally test that condition,
+    // I'll just assume that 10000 steps is enough
+    for (var times = 10000; times > 0; times--){
+      // Associative array that maps positions (strings) to particle objects
+      var pMap = {}
+      for (let particle of particles){
+        let pos = String(particle.p)
+        if (!(pos in pMap)){
+          pMap[pos] = []
+        }
+        pMap[pos].push(particle)
+      }
+
+      // Check the map for colliding particles, repopulating the list
+      particles = []
+      for (let pos in pMap){
+        let particleList = pMap[pos]
+        if (particleList.length === 1){
+          var keeper = particleList[0]
+          keeper.step() // update the kept particle to its new position
+          particles.push(keeper)
+        }
+      }
+    }
+
 
     // Display the answer
-    document.getElementById("answer2").innerHTML = "fill me in"
+    document.getElementById("answer2").innerHTML = particles.length
   }
 
 
@@ -120,6 +142,16 @@ document.addEventListener("DOMContentLoaded", function(event){
       // Everything equal. Equal is not less than.
       return false
 
+    }
+
+    this.step = function(){
+      this.v[0] += this.a[0]
+      this.v[1] += this.a[1]
+      this.v[2] += this.a[2]
+
+      this.p[0] += this.v[0]
+      this.p[1] += this.v[1]
+      this.p[2] += this.v[2]
     }
 
   }
