@@ -1,0 +1,43 @@
+
+b = 6700 + 100000
+c = b + 17000
+h = 0
+
+
+start:
+f = 1
+d = 2
+
+B:            // Begin middle loop
+e = 2
+
+C:                // Begin inner loop
+g = (d * e) - b
+if (g != 0){
+  f = 0
+}
+e++
+g = e - b
+if (g != 0){
+  goto C
+}               // End inner loop
+
+d++
+g = d - b
+if (g != 0){
+  goto B
+}           // End middle loop
+
+if (f != 0){
+  h++
+}
+g = b - c
+
+
+if (g == 0){  // Invert this condition for better readability
+  halt
+}
+else {
+  b += 17
+  goto start
+}

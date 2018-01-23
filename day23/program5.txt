@@ -1,0 +1,41 @@
+
+b = 6700 + 100000
+c = b + 17000
+h = 0
+
+
+start:    // Begin outer loop
+flag = true
+d = 2
+
+while (g != 0){
+  e = 2
+
+  while (g != 0){
+    g = (d * e) - b        // if ((d * e) != b)
+    if (g != 0){
+      flag = false
+    }
+    e++
+    g = e - b    // Real condition for the inner loop: while e != b
+  }
+  d++
+  g = d - b  // Real condition for the middle loop while d != b
+}
+
+if (flag){
+  h++     // Counting how many outer loop iterations leave the flag true
+}
+
+g = b - c       // Real condition for the outer loop: while b != c
+                // First time through this sets g to -17k. Each subsequent time
+                // b increases by 17, so g is -17000, -16983, -16966, ...
+                // Maybe this is why jnz switched to jgz.
+                // Although c - b would work just as well
+
+if (g != 0){
+  b += 17
+  goto start
+}    // End outer loop
+
+halt // Of course halt at the end

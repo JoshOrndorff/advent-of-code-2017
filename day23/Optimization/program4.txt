@@ -1,0 +1,39 @@
+
+b = 6700 + 100000
+c = b + 17000
+h = 0
+
+
+start:    // Begin outer loop
+f = 1     // f is just a flag; start it as true
+d = 2
+
+while (g != 0){
+  e = 2
+
+  while (g != 0){
+    g = (d * e) - b
+    if (g != 0){
+      f = 0     // Set the flag to false
+    }
+    e++
+    g = e - b
+  }
+
+  d++
+  g = d - b
+}
+
+if (f != 0){    // If the flag is true, increment h, the ultimate answer
+  h++           // We're counting how many loop iterations leave the flag true
+}
+
+g = b - c       // First time through this sets g to 17k. Each subsequent time
+                // b increases by 17, so g is 17000, 17017, 17034, ...
+
+if (g != 0){
+  b += 17
+  goto start
+}    // End outer loop
+
+halt

@@ -1,0 +1,26 @@
+
+b = 6700 + 100000
+c = b + 17000
+h = 0
+
+do{
+  flag = true
+
+  for (d = 2; d != b; d++){    // Lines 10 - 16 are a slow primality test
+    for (e = 2; e != b; e++){
+      if (d * e != b){
+        flag = false
+      }
+    }
+  }
+
+  if (flag){
+    h++     // Counting how many outer loop iterations leave the flag true
+  }
+
+  g = b - c  // Can't totally remove this one because we decide whether there
+             // is another iteration before incrementing and repeating
+  if (g != 0){
+    b += 17
+  }
+} while (g != 0)

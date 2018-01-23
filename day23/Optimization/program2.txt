@@ -1,0 +1,61 @@
+set b 67
+set c b
+jnz a 2
+jnz 1 5
+mul b 100
+sub b -100000
+set c b
+sub c -17000
+This top section is all initialization. A is only used to determine how to initialize b and c. A is never used again. More readable version.
+
+if (a === 0){
+  var b = 67
+  var c = 67
+}
+else {
+  var b = 6700 + 100000
+  var c = b + 17000
+}
+
+
+// Real program starts here
+start:
+set f 1
+set d 2
+
+B:
+set e 2
+
+C:
+set g d
+mul g e
+sub g b
+jnz g 2 // Two lines: if g!=0 f=0
+set f 0
+sub e -1
+set g e
+sub g b
+jnz g -8 // if g!=0 goto C
+sub d -1
+set g d
+sub g b
+jnz g -13 // if g!=0 goto B
+jnz f 2 // Two lines: if f!=0 h++
+sub h -1
+set g b
+sub g c
+
+
+This end section is
+if (g === 0){
+  halt
+}
+else {
+  b += 17
+  goto start
+}
+
+jnz g 2
+jnz 1 3 // Jumps past end. Just a halt.
+sub b -17
+jnz 1 -23
